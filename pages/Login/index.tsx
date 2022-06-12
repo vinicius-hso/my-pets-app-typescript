@@ -36,7 +36,7 @@ export default function Login(props: any) {
   }
 
   return !loading ? (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.box}>
         <Text style={styles.title}>LOGIN</Text>
         <View style={{ marginTop: 20 }}>
@@ -72,7 +72,7 @@ export default function Login(props: any) {
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+    </View>
   ) : (
     <Loading />
   );
