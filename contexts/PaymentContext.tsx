@@ -7,9 +7,7 @@ import { PaymentResponse, PaymentType } from "../ts/types";
 const PaymentContext = createContext({} as PaymentContextData);
 
 const PaymentProvider: React.FC<ContextProps> = ({ children }) => {
-  async function paymentCreate(
-    payment: PaymentType
-  ): Promise<PaymentType | object> {
+  async function paymentCreate(payment: PaymentType): Promise<PaymentResponse> {
     return await paymentService.paymentCreate(payment);
   }
 

@@ -14,7 +14,7 @@ import { usePet, useMedicine } from "../../hooks";
 import Loading from "../../components/LoadingComponent";
 import Empty from "../../components/EmptyComponent";
 
-import { MedicineType } from "../../ts/types";
+import { MedicineType, MedicineResponse } from "../../ts/types";
 
 export default function Medicine(props) {
   const { pet } = usePet();
@@ -26,16 +26,14 @@ export default function Medicine(props) {
   const [operationType, setOperationType] = useState<string>("");
 
   useEffect(() => {
-    async function list() {
+    async function list(): Promise<void> {
       setOperationType("Carregando");
       setLoading(true);
 
-      const response = await medicineList(pet?.idpet);
+      const { medicines } = await medicineList(pet?.idpet);
 
-      console.log(response);
-
-      if (response?.medicines) {
-        setList(response.medicines);
+      if (medicines) {
+        setList(medicines);
       }
 
       setLoading(false);
@@ -44,7 +42,7 @@ export default function Medicine(props) {
   }, []);
 
   useEffect(() => {
-    async function list() {
+    async function list(): Promise<void> {
       setOperationType("Carregando");
       setLoading(true);
 
@@ -59,7 +57,7 @@ export default function Medicine(props) {
     list();
   }, [pet]);
 
-  const add = async (name: string) => {
+  const add = async (name: string): Promise<void> => {
     setOperationType("Criando Medicamento");
     setLoading(true);
     name = name.trim();
@@ -71,7 +69,6 @@ export default function Medicine(props) {
       new Date().getFullYear();
 
     const medicine: MedicineType = { idpet: pet.idpet, name: name };
-    // const { idmedicine } = await medicineCreate(medicine);
 
     const res: MedicineType = await medicineCreate(medicine);
     if (res.idmedicine) {
@@ -84,7 +81,7 @@ export default function Medicine(props) {
     setLoading(false);
   };
 
-  const remove = async (id: string, medicineName: string) => {
+  const remove = async (id: string, medicineName: string): Promise<void> => {
     setOperationType("Removendo Medicamento");
 
     Alert.alert(
@@ -95,8 +92,7 @@ export default function Medicine(props) {
           text: "Sim",
           onPress: async () => {
             setLoading(true);
-            const response = await medicineRemove(id);
-            console.log(response);
+            const response: MedicineResponse = await medicineRemove(id);
             if (response.idmedicine) {
               const aux = [...list];
               console.log(aux);
@@ -172,8 +168,8 @@ export default function Medicine(props) {
   );
 }
 
-function Register(props) {
-  const [name, setName] = useState("");
+function Register(props: any) {
+  const [name, setName] = useState<string>("");
 
   return (
     <View style={styles.registercontainer}>

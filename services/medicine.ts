@@ -3,7 +3,7 @@ import { MedicineResponse, MedicineType } from "../ts/types";
 
 async function medicineCreate(
   medicine: MedicineType
-): Promise<MedicineType | object> {
+): Promise<MedicineResponse> {
   const { idpet, name } = medicine;
   try {
     const { data } = await api.post("/medicine/create", { idpet, name });

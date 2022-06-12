@@ -1,8 +1,9 @@
+import { User, UserResponse } from "../types";
 export interface AuthContextData {
-  signIn: (mail: string, password: string) => Promise<void | object>;
+  signIn: (user: User) => Promise<UserResponse>;
   signOut: () => Promise<void>;
   token: string;
   mail: string;
   loading: boolean;
-  userCreate: (mail: string, password: string) => Promise<void | object>;
+  userCreate: (user: User) => Promise<UserResponse>;
 }

@@ -11,11 +11,11 @@ import {
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { FAB } from "react-native-paper";
 import { usePet, usePayment } from "../../hooks";
-import { PaymentType } from "../../ts/types";
+import { PaymentType, PaymentResponse } from "../../ts/types";
 import Loading from "../../components/LoadingComponent";
 import Empty from "../../components/EmptyComponent";
 
-export default function Payment(props) {
+export default function Payment(props: any) {
   const { pet } = usePet();
   const { paymentCreate, paymentList, paymentRemove } = usePayment();
 
@@ -25,7 +25,7 @@ export default function Payment(props) {
   const [operationType, setOperationType] = useState<string>("");
 
   useEffect(() => {
-    async function loadPaymentList() {
+    async function loadPaymentList(): Promise<void> {
       setOperationType("Carregando");
       setLoading(true);
       const { payments } = await paymentList(pet?.idpet);
@@ -37,7 +37,7 @@ export default function Payment(props) {
     loadPaymentList();
   }, [pet]);
 
-  const add = async (description: string, value: number) => {
+  const add = async (description: string, value: number): Promise<void> => {
     setOperationType("Criando Pagamento");
     setLoading(true);
     description = description.trim();
@@ -48,8 +48,15 @@ export default function Payment(props) {
       "/" +
       new Date().getFullYear();
 
-    const payment: PaymentType = { idpet: pet.idpet, description, value, date };
+    const payment: PaymentType = {
+      idpet: pet.idpet,
+      description,
+      value,
+      date,
+    };
+
     const res: PaymentType = await paymentCreate(payment);
+
     if (res.idpayment) {
       const { idpayment } = res;
       const aux = [...list, { idpayment, description, value, date }];
@@ -60,7 +67,10 @@ export default function Payment(props) {
     setLoading(false);
   };
 
-  const remove = async (id: string, paymentDescription: string) => {
+  const remove = async (
+    id: string,
+    paymentDescription: string
+  ): Promise<void> => {
     setOperationType("Removendo Pagamento");
 
     Alert.alert(
@@ -71,9 +81,8 @@ export default function Payment(props) {
           text: "Sim",
           onPress: async () => {
             setLoading(true);
-            const response = await paymentRemove(id);
-            console.log(response);
-            if (response) {
+            const response: PaymentResponse = await paymentRemove(id);
+            if (response.idpayment) {
               const aux = [...list];
               for (let i = 0; i < aux.length; i++) {
                 if (aux[i].idpayment == id) {
@@ -149,9 +158,9 @@ export default function Payment(props) {
   );
 }
 
-function Register(props) {
-  const [description, setDescription] = useState("");
-  const [value, setValue] = useState("");
+function Register(props: any) {
+  const [description, setDescription] = useState<string>("");
+  const [value, setValue] = useState<string>("");
 
   return (
     <View style={styles.registercontainer}>

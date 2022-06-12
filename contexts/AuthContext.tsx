@@ -4,15 +4,16 @@ import api from "../services/api";
 import * as SecureStore from "expo-secure-store";
 import { ContextProps } from "../ts/types";
 import { AuthContextData } from "../ts/interfaces";
+import { User, UserResponse } from "../ts/types";
 
 const AuthContext = createContext({} as AuthContextData);
 
 // extrai o children em <AuthProdiver> children </AuthProvider>
 // no children estarão as rotas definidas por Navigator e Screen
 const AuthProvider: React.FC<ContextProps> = ({ children }) => {
-  const [token, setToken] = useState(null as string);
-  const [mail, setMail] = useState("" as string);
-  const [loading, setLoading] = useState(true as boolean);
+  const [token, setToken] = useState<string>(null);
+  const [mail, setMail] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   // o useEffect que vai ser disparado assim que o AuthProvider for construído em tela
   useEffect(() => {
@@ -33,11 +34,8 @@ const AuthProvider: React.FC<ContextProps> = ({ children }) => {
     loadStorageData();
   }, []);
 
-  async function signIn(
-    mail: string,
-    password: string
-  ): Promise<void | object> {
-    const response = await auth.signIn(mail, password);
+  async function signIn(user: User): Promise<UserResponse> {
+    const response: UserResponse = await auth.signIn(user);
 
     if (response.token && response.mail) {
       api.defaults.headers.common["Authorization"] = `Bearer ${response.token}`;
@@ -58,11 +56,9 @@ const AuthProvider: React.FC<ContextProps> = ({ children }) => {
     SecureStore.deleteItemAsync("mail");
   }
 
-  async function userCreate(
-    mail: string,
-    password: string
-  ): Promise<void | object> {
-    const response = await auth.userCreate(mail, password);
+  async function userCreate(newUser: User): Promise<UserResponse> {
+    const response: UserResponse = await auth.userCreate(newUser);
+
     if (response.token && response.mail) {
       api.defaults.headers.common["Authorization"] = `Bearer ${response.token}`;
       await SecureStore.setItemAsync("token", response.token);

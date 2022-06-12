@@ -1,4 +1,5 @@
 import { View, ActivityIndicator, Text } from "react-native";
+import styles from "./styles";
 
 interface ILoadingProps {
   operation?: string;
@@ -6,24 +7,8 @@ interface ILoadingProps {
 
 const Loading: React.FC<ILoadingProps> = ({ operation }) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#FFC125",
-      }}
-    >
-      {operation && (
-        <Text
-          style={{
-            margin: 20,
-          }}
-        >
-          {operation}
-        </Text>
-      )}
-
+    <View style={styles.view}>
+      {operation && <Text style={styles.text}>{operation}</Text>}
       <ActivityIndicator size="large" color="#666" />
     </View>
   );

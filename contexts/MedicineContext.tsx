@@ -13,7 +13,7 @@ const MedicineProvider: React.FC<ContextProps> = ({ children }) => {
 
   async function medicineCreate(
     medicine: MedicineType
-  ): Promise<MedicineType | object> {
+  ): Promise<MedicineResponse> {
     return await medicineService.medicineCreate(medicine);
   }
 

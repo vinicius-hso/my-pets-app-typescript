@@ -11,11 +11,12 @@ import {
 
 import Loading from "../../components/LoadingComponent";
 import { useAuth } from "../../hooks";
+import { User, UserResponse } from "../../ts/types";
 
-export default function Login(props) {
-  const [mail, setMail] = useState("ana@teste.com");
-  const [password, setPassword] = useState("123456");
-  const [loading, setLoading] = useState(false);
+export default function Login(props: any) {
+  const [mail, setMail] = useState<string>("ana@teste.com");
+  const [password, setPassword] = useState<string>("123456");
+  const [loading, setLoading] = useState<boolean>(false);
   const { signIn } = useAuth();
 
   function handleSign() {
@@ -25,9 +26,10 @@ export default function Login(props) {
       Alert.alert("A senha precisa ter entre 6 e 10 caracteres");
     } else {
       setLoading(true);
-      signIn(mail, password)
-        .then((r: any) => {
-          if (r?.error) Alert.alert(r.error);
+      const user: User = { mail, password };
+      signIn(user)
+        .then((res: UserResponse) => {
+          if (res?.error) Alert.alert(res.error);
         })
         .finally(() => setLoading(false));
     }

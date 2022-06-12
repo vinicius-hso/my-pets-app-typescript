@@ -11,7 +11,7 @@ import { PetProvider, MedicineProvider, PaymentProvider } from "../../contexts";
 import { Pet, Payment, Medicine } from "../index";
 import "./styles";
 
-export default function Dashboard(props) {
+export default function Dashboard() {
   return (
     <PetProvider>
       <MedicineProvider>

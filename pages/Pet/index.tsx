@@ -17,7 +17,7 @@ import Loading from "../../components/LoadingComponent";
 import Empty from "../../components/EmptyComponent";
 import { PetResponse, Pet as PetType } from "../../ts/types";
 
-export default function Pet(props) {
+export default function Pet(props: any) {
   const [selected, setSelected] = useState<string>("");
   const [register, setRegister] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +28,7 @@ export default function Pet(props) {
   const { selectPet, petList, petCreate, petRemove } = usePet();
 
   useEffect(() => {
-    async function list() {
+    async function list(): Promise<void> {
       setLoading(true);
       setOperationType("Carregando Pets");
       const response: PetResponse = await petList();
@@ -47,7 +47,7 @@ export default function Pet(props) {
   };
 
   //* create pet
-  const add = async (name: string) => {
+  const add = async (name: string): Promise<void> => {
     setOperationType("Criando Pet");
     name = name.trim();
     if (name) {
@@ -65,7 +65,7 @@ export default function Pet(props) {
   };
 
   //* remove pet
-  const remove = async (idpet: string, name: string) => {
+  const remove = async (idpet: string, name: string): Promise<void> => {
     setOperationType("Removendo Pet");
     Alert.alert(null, `Excluir definitivamente o pet ${name}?`, [
       {
@@ -168,7 +168,7 @@ export default function Pet(props) {
 }
 
 //* register pet
-function Register(props) {
+function Register(props: any) {
   const [name, setName] = useState<string>("");
 
   return (

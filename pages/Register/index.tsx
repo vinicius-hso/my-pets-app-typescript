@@ -13,15 +13,17 @@ import { useAuth } from "../../hooks";
 
 import Loading from "../../components/LoadingComponent";
 
-export default function Register(props) {
-  const [mail, setMail] = useState("ana@teste.com");
-  const [password, setPassword] = useState("123456");
-  const [confirmation, setConfirmation] = useState("123456");
-  const [loading, setLoading] = useState(false);
+import { User, UserResponse } from "../../ts/types";
+
+export default function Register(props: any) {
+  const [mail, setMail] = useState<string>("ana@teste.com");
+  const [password, setPassword] = useState<string>("123456");
+  const [confirmation, setConfirmation] = useState<string>("123456");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const { userCreate } = useAuth();
 
-  async function handleRegister() {
+  async function handleRegister(): Promise<void> {
     if (!mail) {
       Alert.alert("Forneça o e-mail");
     } else if (password.length < 6 || password.length > 10) {
@@ -30,9 +32,11 @@ export default function Register(props) {
       Alert.alert("A senha e a confirmação precisam ser iguais");
     } else {
       setLoading(true);
-      userCreate(mail, password)
-        .then((r) => {
-          if (r.error) Alert.alert(r.error);
+
+      const user: User = { mail, password };
+      userCreate(user)
+        .then((res: UserResponse) => {
+          if (res.error) Alert.alert(res.error);
         })
         .finally(() => setLoading(false));
     }
@@ -49,7 +53,7 @@ export default function Register(props) {
             onChangeText={setMail}
             value={mail}
             autoCapitalize="none"
-            autoComplete="email"
+            // autoComplete="email"
             autoCorrect={false}
             keyboardType="email-address"
           />

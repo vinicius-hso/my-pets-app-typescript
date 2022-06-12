@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import image from "../../assets/no-data.png";
+import { Message } from "../../ts/types";
+import styles from "./styles";
+const image = require("../../assets/no-data.png");
 
-export default function Empty(props) {
+export default function Empty() {
   const route = useRoute();
-  const [message, setMessage] = useState({});
+  const [message, setMessage] = useState<Message>({});
 
   useEffect(() => {
     function handleScreenNavigation() {
@@ -29,7 +31,7 @@ export default function Empty(props) {
           });
           break;
         default:
-          setMessage("");
+          setMessage({});
           break;
       }
     }
@@ -38,30 +40,10 @@ export default function Empty(props) {
   }, []);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text
-        style={{
-          fontSize: 18,
-          textAlign: "center",
-          marginHorizontal: 40,
-        }}
-      >
-        {message.top}
-      </Text>
-      <Image
-        style={{ width: 300, height: 300 }}
-        source={image}
-        resizeMode="contain"
-      />
-      <Text
-        style={{
-          fontSize: 18,
-          textAlign: "center",
-          marginHorizontal: 40,
-        }}
-      >
-        {message.bottom}
-      </Text>
+    <View style={styles.view}>
+      <Text style={styles.text}>{message.top}</Text>
+      <Image style={styles.image} source={image} resizeMode="contain" />
+      <Text style={styles.text}>{message.bottom}</Text>
     </View>
   );
 }
