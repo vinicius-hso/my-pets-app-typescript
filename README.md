@@ -32,6 +32,34 @@ List the ready features here:
 - [x] Payment register
 - [x] Medicine register
 
+## Screenshots
+
+* Home
+
+![](https://github.com/vinicius-hso/my-pets-app-typescript/blob/main/assets/images/home.PNG)
+
+* Login
+
+![](https://github.com/vinicius-hso/my-pets-app-typescript/blob/main/assets/images/login.PNG)
+
+* Pet
+
+![](https://github.com/vinicius-hso/my-pets-app-typescript/blob/main/assets/images/create-pet.PNG)
+
+![](https://github.com/vinicius-hso/my-pets-app-typescript/blob/main/assets/images/list-pets.PNG)
+
+* Payment
+
+![](https://github.com/vinicius-hso/my-pets-app-typescript/blob/main/assets/images/create-payment.PNG)
+
+![](https://github.com/vinicius-hso/my-pets-app-typescript/blob/main/assets/images/list-payment.PNG)
+
+* Medicine
+
+![](https://github.com/vinicius-hso/my-pets-app-typescript/blob/main/assets/images/create-payment.PNG)
+
+![](https://github.com/vinicius-hso/my-pets-app-typescript/blob/main/assets/images/list-medicine.PNG)
+
 ## Setup
 
 Install Expo globally
